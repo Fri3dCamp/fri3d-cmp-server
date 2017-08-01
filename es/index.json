@@ -1,0 +1,19 @@
+{
+    "settings": {
+        "number_of_shards" : 1,
+        "number_of_replicas" : 0
+    },
+    "mappings": {
+        "people": {
+            "_id": {"path": "id"},
+            "_source": { "enabled": true },
+            "dynamic": false,
+            "properties": {
+                "id": { "type": "keyword" },
+                "name": { "type": "string" },
+                "email": { "type": "keyword" },
+                "picture_url": { "type": "keyword" }
+            }
+        }
+    }
+}
