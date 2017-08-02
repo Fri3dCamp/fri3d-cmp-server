@@ -4,15 +4,14 @@
         "number_of_replicas" : 0
     },
     "mappings": {
-        "people": {
-            "_id": {"path": "id"},
+        "activities": {
             "_source": { "enabled": true },
-            "dynamic": false,
+            "dynamic": "strict",
             "properties": {
-                "id": { "type": "keyword" },
-                "name": { "type": "string" },
-                "email": { "type": "keyword" },
-                "picture_url": { "type": "keyword" }
+                "title": { "type": "text" },
+                "owner": { "type": "keyword" },
+                "status": { "type": "keyword" },
+                "description": { "type": "text" }
             }
         }
     }

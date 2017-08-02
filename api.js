@@ -24,11 +24,12 @@ var cors            = require('cors'),
     Errors          = require('./api-errors'),
     ResponseHandler = require('./utils/response-handler'),
     jwt             = require('express-jwt');
+var jwtAuthz = require('express-jwt-authz');
 var jwks = require('jwks-rsa');
 
 var LOGGER = log4js.getLogger("api");
 
-function API(config, secret) {
+function API(config) {
     this.config = config;
 
     this.middlewares = [];
@@ -259,8 +260,8 @@ API.prototype.registerHead = function(path, fn) {
     LOGGER.info('    [HEAD] ' + path);
 };
 
-API.prototype.registerSecureHead = function(path, guard, fn) {
-    this.app.head(path, this.jwtCheck, guard, fn);
+API.prototype.registerSecureHead = function(path, scopes, fn) {
+    this.app.head(path, this.jwtCheck, jwtAuthz(scopes), fn);
     LOGGER.info('   [sHEAD] ' + path);
 };
 
@@ -269,8 +270,8 @@ API.prototype.registerGet = function(path, fn) {
     LOGGER.info('     [GET] ' + path);
 };
 
-API.prototype.registerSecureGet = function(path, guard, fn) {
-    this.app.get(path, this.jwtCheck, guard, fn);
+API.prototype.registerSecureGet = function(path, scopes, fn) {
+    this.app.get(path, this.jwtCheck, jwtAuthz(scopes), fn);
     LOGGER.info('    [sGET] ' + path);
 };
 
@@ -279,8 +280,8 @@ API.prototype.registerPut = function(path, fn) {
     LOGGER.info('     [PUT] ' + path);
 };
 
-API.prototype.registerSecurePut = function(path, guard, fn) {
-    this.app.put(path, this.jwtCheck, guard, function(req, res) { return fn(req, res); });
+API.prototype.registerSecurePut = function(path, scopes, fn) {
+    this.app.put(path, this.jwtCheck, jwtAuthz(scopes), function(req, res) { return fn(req, res); });
     LOGGER.info('    [sPUT] ' + path);
 };
 
@@ -289,8 +290,8 @@ API.prototype.registerPost = function(path, fn) {
     LOGGER.info('    [POST] ' + path);
 };
 
-API.prototype.registerSecurePost = function(path, guard, fn) {
-    this.app.post(path, this.jwtCheck, guard, function(req, res) { return fn(req, res); });
+API.prototype.registerSecurePost = function(path, scopes, fn) {
+    this.app.post(path, this.jwtCheck, jwtAuthz(scopes), function(req, res) { return fn(req, res); });
     LOGGER.info('   [sPOST] ' + path);
 };
 
@@ -299,8 +300,8 @@ API.prototype.registerPatch = function(path, fn) {
     LOGGER.info('   [PATCH] ' + path);
 };
 
-API.prototype.registerSecurePatch = function(path, guard, fn) {
-    this.app.patch(path, this.jwtCheck, guard, function(req, res) { return fn(req, res); });
+API.prototype.registerSecurePatch = function(path, scopes, fn) {
+    this.app.patch(path, this.jwtCheck, jwtAuthz(scopes), function(req, res) { return fn(req, res); });
     LOGGER.info('  [sPATCH] ' + path);
 };
 
@@ -309,8 +310,8 @@ API.prototype.registerDelete = function(path, fn) {
     LOGGER.info('  [DELETE] ' + path);
 };
 
-API.prototype.registerSecureDelete = function(path, guard, fn) {
-    this.app.delete(path, this.jwtCheck, guard, function(req, res) { return fn(req, res); });
+API.prototype.registerSecureDelete = function(path, scopes, fn) {
+    this.app.delete(path, this.jwtCheck, jwtAuthz(scopes), function(req, res) { return fn(req, res); });
     LOGGER.info(' [sDELETE] ' + path);
 };
 
