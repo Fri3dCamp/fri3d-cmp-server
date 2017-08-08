@@ -1,6 +1,18 @@
 /* -- Logging -- */
 var log4js = require('log4js');
+log4js.configure({
+  appenders: { 'out': { type: 'stdout' } },
+  categories: { default: { appenders: ['out'], level: 'debug' } }
+});
+
+
 var LOGGER = log4js.getLogger("server");
+
+process.on('SIGINT', function() {
+	console.log("shutdown...");
+	LOGGER.info("shutting down due to sigint...");
+	process.exit(0);
+});
 
 /* -- Configuration -- */
 var configuration = require('./config');
