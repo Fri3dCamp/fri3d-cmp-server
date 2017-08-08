@@ -9,9 +9,9 @@ _insert use and code overview here_
 
 ### usage
 
-* `docker-compose up` brings up the whole stack and logs to stdout (`-d` to detach)
-* `docker-compose logs <frontend|api|store>` dumps logs (from the specified container)
+* `docker-compose up` brings up the whole stack and logs to stdout (`-d` to detach, ^C to stop)
 * `docker-compose stop` brings it all down
+* `docker-compose logs <frontend|api|store>` dumps logs (from the specified container)
 * `docker-compose exec api /bin/bash` runs bash on a *running* API container
 * `docker-compose build --no-cache api` rebuilds the API container, ignoring npm caches
 * ...
