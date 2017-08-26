@@ -9,7 +9,7 @@ function Storage(configuration) {
         "host": configuration.elasticsearch.host,
         "log": configuration.elasticsearch.log
     });
-    this.index = configuration.index;
+    this.index = configuration.elasticsearch.index;
 
     LOGGER.debug("ElasticSearch client created");
 }
