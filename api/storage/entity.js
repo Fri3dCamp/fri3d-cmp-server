@@ -82,6 +82,15 @@ Entity.prototype.create = function(data) {
     }));
 };
 
+Entity.prototype.set = function(id, data) {
+    return Q(this.esClient.index({
+        index: this.index,
+        type: this.type,
+        id: id,
+        body: data
+    }));
+};
+
 Entity.prototype.update = function(id, partialData) {
     return Q(this.esClient.update({
         index: this.index,

@@ -34,7 +34,7 @@ api.storage(storage);
 
 /* -- Modules -- */
 api.module('health');
-api.module('activity');
+api.module('submission');
 
 // -- start listening for requests
 return api.listen();

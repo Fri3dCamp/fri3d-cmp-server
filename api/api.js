@@ -87,6 +87,21 @@ API.prototype.listen = function() {
         }
     }
 
+    // -- Express -----------------------------------------------------------------------------------------------------
+    this.app.use(cors({
+        methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'],
+        origin: "*"
+    }));
+
+    // for (var idx in this.middlewares) {
+    //     if (! this.middlewares.hasOwnProperty(idx)) continue;
+    //     this.app.use(this.middlewares[idx]);
+    // }
+
+    // this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(bodyParser.json());
+    this.app.use(errorHandler());
+
     // -- Resources ----------------------------------------------------------------------------------------------------
     var responseHandler = new ResponseHandler();
     var resources = {};
@@ -113,142 +128,13 @@ API.prototype.listen = function() {
         this.modules[moduleName].run(this.config, self, resources, services);
     }
 
-    // -- Express -----------------------------------------------------------------------------------------------------
-    this.app.use(cors({
-        methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'],
-        origin: "*"
-    }));
 
-    for (var idx in this.middlewares) {
-        if (! this.middlewares.hasOwnProperty(idx)) continue;
-        this.app.use(this.middlewares[idx]);
-    }
-
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(bodyParser.json());
-    this.app.use(errorHandler());
 
     this.app.listen(this.config.port, function () {
         LOGGER.info();
         LOGGER.info('API listening on port ' + self.config.port);
         LOGGER.info();
     });
-};
-
-// ====================================================================================================================
-// == Authorization Roles
-// ====================================================================================================================
-API.prototype.onlyIfCollaboratorOrOwner = function(lookupService) {
-    return function(req, res, next) {
-        var user = req.user;
-        if (! user) {
-            LOGGER.warn('Not allowed to execute an api call for which a user has to be authenticated.');
-
-            return res.status(401).send("Not Authorized");
-        }
-
-        var type = req.params['type'];
-        var owner = req.params['owner'];
-        var slug = req.params['slug'];
-
-        if (!type || !owner || !slug) {
-            LOGGER.warn('Not enough parameters defined to determine the permissions');
-
-            return res.status(400).send("No owner has been defined");
-        }
-
-        if (user.sub !== owner) {
-            lookupService.permissions(type, owner, slug, req.user.sub).then(function(result) {
-                if (! result) {
-                    return res.status(403).send("Not Authorized");
-                } else {
-                    // --  currently we take no interest in the defined permissions on the collaborator object. If it
-                    // -- is a collaborator access is granted
-                    next();
-                }
-            });
-        } else {
-            return next();
-        }
-    }
-};
-
-API.prototype.onlyIfOwner = function() {
-    return function(req, res, next) {
-        var owner = req.params['owner'];
-        var user = req.user;
-
-        if (! owner) {
-            LOGGER.warn('No owner has been specified as a parameter on the request. It is needed to verify if the user is actually the owner of the called resource.');
-
-            return res.status(400).send("No owner has been defined");
-        }
-
-        if (! user) {
-            LOGGER.warn('Not allowed to execute an api call for which a user has to be authenticated.');
-
-            return res.status(401).send("Not Authorized");
-        }
-
-        if (user.sub !== owner) {
-            LOGGER.warn('Only the owner of the resource (which you are not) is allowed to call the endpoint.');
-
-            return res.status(403).send("Not Authorized");
-        }
-
-        return next();
-    }
-};
-
-API.prototype.onlyIfMe = function(req, res, next) {
-    var userId = req.params['id'];
-    var user = req.user;
-
-    if (! userId) {
-        LOGGER.warn('No user id has been specified as a parameter on the request. It is needed to verify if the user is actually the owner of the called resource.');
-
-        return res.status(400).send("No user id has been defined");
-    }
-
-    if (! user) {
-        LOGGER.warn('Not allowed to execute an api call for which a user has to be authenticated.');
-
-        return res.status(401).send("Not Authorized");
-    }
-
-    if (user !== userId) {
-        LOGGER.warn('Only the owner of the resource (which you are not) is allowed to call the endpoint.');
-
-        return res.status(403).send("Not Authorized");
-    }
-
-    return next();
-};
-
-API.prototype.onlyIfUser = function() {
-    return function(req, res, next) {
-        var user = req.user;
-
-        if (! user) {
-            return res.status(401).send("Not Authenticated");
-        }
-
-        return next();
-    };
-};
-
-API.prototype.onlyIfRole = function(role) {
-    return function(req, res, next) {
-        var user = req.user;
-
-        if (! user) {
-            return res.status(401).send("Not Authenticated");
-        }
-
-        if (! user.roles && user.roles.indexOf(role) === -1) return res.status(403).send('Not Authorized');
-
-        return next();
-    };
 };
 
 // ====================================================================================================================

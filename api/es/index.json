@@ -4,14 +4,70 @@
         "number_of_replicas" : 0
     },
     "mappings": {
-        "activities": {
+        "submission": {
             "_source": { "enabled": true },
             "dynamic": "strict",
             "properties": {
-                "title": { "type": "text" },
-                "owner": { "type": "keyword" },
+                "votes": { "type": "integer" },
                 "status": { "type": "keyword" },
-                "description": { "type": "text" }
+                "title": { "type": "text" },
+                "summary": { "type": "text" },
+                "description": { "type": "text" },
+
+                "speaker_name": { "type": "text" },
+                "speaker_email": { "type": "text" },
+                "speaker_bio": { "type": "text" },
+                "associated_hackerspaces": {"type": "text"},
+
+                "collaborators": {
+                    "type": "nested",
+                    "properties": {
+                        "name" : {"type": "text"},
+                        "email" : {"type": "text"}
+                    }
+                },
+
+                "visit_duration_minutes": { "type": "integer" },
+                "duration_minutes": { "type": "integer" },
+
+                "sessions_needed": { "type": "integer" },
+                "max_repeats": { "type": "integer" },
+
+                "presentation_type": { "type": "keyword" },
+                "attendance_type": { "type": "keyword" },
+
+                "participant_cap": { "type": "integer" },
+                "total_group_size": { "type": "integer" },
+                "additional_costs_fixed": { "type": "float" },
+                "additional_costs_per_attendant": { "type": "float" },
+
+                "location": {
+                    "type": "nested",
+                    "properties": {
+                        "location_type": { "type": "keyword" },
+                        "location_requirements": { "type": "keyword" }
+                    }
+                },
+                "audience": {
+                    "type": "nested",
+                    "properties": {
+                        "audience_level": {"type": "keyword"},
+                        "audience_requirements": { "type": "keyword" }
+                    }
+                },
+
+                // anything special orga is to provide
+                "required_from_orga" : {"type": "text"},
+
+
+                // timing
+                //  these should all default to normal content hours
+                "time_available_friday_start": { "type": "integer" },
+                "time_available_friday_stop": { "type": "integer" },
+                "time_available_saturday_start": { "type": "integer" },
+                "time_available_saturday_stop": { "type": "integer" },
+                "time_available_sunday_start": { "type": "integer" },
+                "time_available_sunday_stop": { "type": "integer" }
             }
         }
     }
