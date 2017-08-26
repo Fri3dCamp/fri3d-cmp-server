@@ -42,7 +42,7 @@ You need to rebuild node_modules, this will change when actually deploying (see 
 
 ES needs vm shenanigans to run, do the following or add it to /etc/sysctl.conf to make it stick.
 
-`sudo -w vm.max_map_count=262144`
+`sudo sysctl -w vm.max_map_count=262144`
 
 ## todo
 * (upon prod) remove cache hate from nginx config
