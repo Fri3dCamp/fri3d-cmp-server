@@ -8,8 +8,8 @@ var path = require('path');
 
 var mails = {
     submission: {
-        created: new EmailTemplate(path.join(__dirname, 'templates', 'submission-created')),
-        updated: new EmailTemplate(path.join(__dirname, 'templates', 'submission-updated'))
+        created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created')),
+        updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated'))
     }
 };
 
