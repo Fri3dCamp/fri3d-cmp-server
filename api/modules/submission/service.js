@@ -1,5 +1,7 @@
 const uuid = require('node-uuid');
 var Tracer = require('../../tracer');
+var log4js = require('log4js');
+var LOGGER = log4js.getLogger("server");
 
 function SubmissionService(storage) {
     this.submissions = storage.entity('submissions');
@@ -47,3 +49,4 @@ SubmissionService.prototype.listComments = function(submissionId, offset, from_t
 };
 
 module.exports = SubmissionService;
+// vim: set expandtab:

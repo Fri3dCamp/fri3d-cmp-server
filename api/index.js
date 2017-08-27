@@ -5,13 +5,12 @@ log4js.configure({
   categories: { default: { appenders: ['out'], level: 'debug' } }
 });
 
-
 var LOGGER = log4js.getLogger("server");
 
 process.on('SIGINT', function() {
-	console.log("shutdown...");
-	LOGGER.info("shutting down due to sigint...");
-	process.exit(0);
+    console.log("shutdown...");
+    LOGGER.info("shutting down due to sigint...");
+    process.exit(0);
 });
 
 /* -- Configuration -- */
@@ -39,3 +38,5 @@ api.module('submission');
 
 // -- start listening for requests
 return api.listen();
+
+// vim: set expandtab:

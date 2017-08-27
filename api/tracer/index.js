@@ -54,12 +54,33 @@ Tracer.prototype.traceCreation = function(newValue) {
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, "system", "Submission created")
+            sendComment(self.comments, newValue.id, "Submission created")
         ]));
     });
 
     return defer.promise;
 };
+
+function diff2txt(d) {
+
+    var o = [];
+
+    for (var i in d) {
+        var e = d[i];
+        var name = e.path.join('.');
+        if (e.kind == 'N') {
+            o.push('"'+name+'" is nieuw ("'+e.rhs+'")');
+        } else if (e.kind == 'D') {
+            o.push('"'+name+'" is weg');
+        } else if (e.kind == 'E') {
+            o.push('"'+name+'" is aangepast (van "'+e.lhs+'" naar "'+e.rhs+'")');
+        } else {
+            o.push('"'+name+'" is aangepast');
+        }
+    }
+    return o.join(", ");
+
+}
 
 Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var self = this;
@@ -89,7 +110,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, "system", "Submission updated", differences)
+            sendComment(self.comments, newValue.id, "Submission updated: "+diff2txt(differences))
         ]));
     });
 
@@ -98,13 +119,12 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
 module.exports = Tracer;
 
-function sendComment(entity, submission_id, user, message, diff) {
+function sendComment(entity, submission_id, message) {
     return entity.set(uuid.v4(), {
         timestamp: new Date(),
         submission_id: submission_id,
-        user: user,
-        message: message,
-        diff: diff
+        origin: 'system',
+        contents: message,
     });
 }
 
