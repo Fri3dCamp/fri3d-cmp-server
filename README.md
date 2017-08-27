@@ -21,14 +21,14 @@ _insert use and code overview here_
 The full thing runs on docker-compose. Let's have a look at `docker-compose.yml` and see what gives;
 
 * `frontend` is an nginx instance which, per the config file in `frontend/config/`, serves;
-** static content from `frontend/data/`
-** api requests which it forwards to the `api` container below
+  * static content from `frontend/data/`
+  * api requests which it forwards to the `api` container below
 * `api` is a node app which;
-** talks to the `store` container for database hits
-** has the entire `api/` mounted as `/api/` (changes are instavisible)
-** has it's own `Dockerfile` in `api/`
+  * talks to the `store` container for database hits
+  * has the entire `api/` mounted as `/api/` (changes are instavisible)
+  * has it's own `Dockerfile` in `api/`
 * `store` is an ElasticSearch datastore, with;
-** `store/data/` mounted the ES storage, so you can shut it down, back this up, move between hosts, ...
+  * `store/data/` mounted the ES storage, so you can shut it down, back this up, move between hosts, ...
 
 ### it doesn't work
 
