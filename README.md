@@ -7,6 +7,12 @@ _insert use and code overview here_
 
 ## docker
 
+### preamble
+
+The static website contents reside in another github project and is added as a submodule here, in `frontend/data`. Either clone this repo with `--recursive`, or do a `git submodule init` and `git submodule update` after the facts. For more information (specifically regarding committing), search for "git submodules".
+
+It needs an `npm install` in `frontend/data` to work.
+
 ### usage
 
 * `docker-compose up` brings up the whole stack and logs to stdout (`-d` to detach, ^C to stop)
@@ -47,3 +53,4 @@ ES needs vm shenanigans to run, do the following or add it to /etc/sysctl.conf t
 ## todo
 * (upon prod) remove cache hate from nginx config
 * (upon prod) in API's docker, s/mounted volume/proper COPY/g,
+* `npm install` in the `frontend/data` submodule upon `docker-compose build`
