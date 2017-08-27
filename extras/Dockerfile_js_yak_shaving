@@ -1,0 +1,8 @@
+FROM node:boron
+
+RUN npm install -g gulp
+RUN npm install -g bower
+RUN npm install -g babel-cli babel-preset-env
+
+WORKDIR /src
+VOLUME /src

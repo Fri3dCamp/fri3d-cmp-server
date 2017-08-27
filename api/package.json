@@ -36,7 +36,9 @@
     "util": "~0.10.2",
     "winston": "^0.7.3",
     "log4js": "^2.3.2",
-    "bodybuilder": "^2.2.0"
+    "bodybuilder": "^2.2.0",
+    "deep-diff": "^0.3.8",
+    "email-templates": "^2.7.1"
   },
   "devDependencies": {
     "mocha": "~1.17.0",
