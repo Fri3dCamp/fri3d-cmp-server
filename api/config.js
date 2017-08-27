@@ -1,6 +1,10 @@
-
-
 module.exports = {
+    mail: {
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT),
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
     port: process.env.PORT || 3100,
     elasticsearch: {
         host: [{
@@ -11,3 +15,4 @@ module.exports = {
         log: process.env.ES_LOG || "info"
     }
 };
+// vim: set expandtab:

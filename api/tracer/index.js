@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const uuid = require('node-uuid');
 const diff = require('deep-diff').diff;
 const Q = require('q');
+var configuration = require('../config');
 
 var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
@@ -17,12 +18,12 @@ function Tracer(storage, orgaEmail) {
     this.orgaEmail = orgaEmail;
     this.comments = storage.entity('comments');
     this.transporter = nodemailer.createTransport({
-        host: 'mail.gandi.net',
-        port: 587,
+        host: configuration.mail.host,
+        port: configuration.mail.port,
         secure: false, // secure:true for port 465, secure:false for port 587
         auth: {
-            user: 'systemsout@codewerken.be',
-            pass: 'THIS.IS.NOT.A.REAL.PASSWORD.|x885'
+            user: configuration.mail.user,
+            pass: configuration.mail.pass,
         }
     });
 }
