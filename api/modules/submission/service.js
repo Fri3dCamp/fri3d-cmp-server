@@ -34,7 +34,7 @@ SubmissionService.prototype.setSubmission = function(data) {
     }
 };
 
-SubmissionService.prototype.listComments = function(submissionId, offset) {
+SubmissionService.prototype.listComments = function(submissionId, offset, from_ts) {
     var builder = this.comments.prepareSearch()
         .filter('term', 'submission_id.keyword', submissionId)
         .sort("timestamp", "desc")

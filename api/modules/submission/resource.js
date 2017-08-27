@@ -12,7 +12,7 @@ SubmissionResource.prototype.set = function(req, res) {
 };
 
 SubmissionResource.prototype.listComments = function(req, res) {
-    return this.responseHandler.handle(req, res, this.service.listComments(req.params['submission_id'], req.query['offset']));
+    return this.responseHandler.handle(req, res, this.service.listComments(req.params['submission_id'], req.query['offset'], req.query['from_ts']));
 };
 
 module.exports = SubmissionResource;
