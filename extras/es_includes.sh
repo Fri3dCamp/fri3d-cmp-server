@@ -1,0 +1,6 @@
+AUTH="--user elastic:changeme"
+URL="http://localhost:9200"
+INDEX="fri3d-cmp"
+BACKUP_REPO="fri3d_backup"
+BACKUP_PATH="/backups"
+DOCKER_CURL="docker-compose exec store curl $AUTH"

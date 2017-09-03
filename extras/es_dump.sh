@@ -1,3 +1,5 @@
 #!/bin/bash
-docker-compose exec store curl --user elastic:changeme http://localhost:9200/fri3d-cmp/_search | python -m json.tool
 
+. `dirname $0`/es_includes.sh
+
+$DOCKER_CURL $URL/$INDEX/_search | python -m json.tool
