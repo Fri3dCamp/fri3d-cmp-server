@@ -107,31 +107,14 @@
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hallo <%= submission.firstname %>,</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Je inschrijving is goed aangekomen!</p>
-                        <h3 style="font-family: sans-serif; font-size: 20px; font-weight:bold;">Dit zijn de gegevens van je inschrijving</h3>
-                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;">Titel</h4>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><%= submission.title %></p>
-                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;">Omschrijving</h4>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><%= submission.summary %></p>
-
-                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;margin-top:40px;">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
-                                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #0E98AF; border-radius: 5px; text-align: center;"> <a href="https://api.fri3d.be/submission/<%= submission.id %>" target="_blank" style="display: inline-block; color: #ffffff; background-color: #0E98AF; border: solid 1px #0E98AF; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #0E98AF;">Bewerk je inschrijving</a> </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Heb je nog vragen over je inschrijving? <a style="color:#0E98A8" href="mailto:content@fri3d.be">Neem dan contact op</a>.</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Vriendelijke groeten,<br>Het Fri3d Camp content team.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Bedankt voor je voorstel voor Fri3d Camp 2018 !!! (*)</p>
+                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;"><center><%= submission.title %></center></h4>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><center><%= submission.summary %></center></p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Je kan dit voorstel steeds <b>bijwerken</b>, aanvullen met <b>commentaar</b> of ons bijkomende <b>vragen stellen</b>. Gebruik hiervoor de volgende <b>persoonlijke</b> link naar jouw voorstel:</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><center><a href="http://content.fri3d.be/cfp/<%= submission.id %>">http://content.fri3d.be/cfp/<%= submission.id %></a></center></p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We bekijken je voorstel ook en stellen je langs dezelfde weg misschien nog bijkomende vragen om je voorstel te vervolledigen of verder in detail uit te werken.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Met vriendelijke groeten,</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Fri3d Camp, Team Content</p>
                       </td>
                     </tr>
                   </table>
@@ -146,7 +129,8 @@
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
                   <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Fri3d Camp is een tweejaarlijks gezinsvriendelijk zomerkamp voor hackers, makers en doe-het-zelvers. </span>
+                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">(*) Als je niet zelf dit voorstel hebt ingediend en je wil dat we dit voorstel, ingezonden via jouw email adres, negeren, gelieve dan de volgende link te volgen om dit voorstel aldus te markeren.</span>
+                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center; a:link { color: #999999; };"><center><a href="http://content.fri3d.be/cfp/<%= submission.id %>?wrong_email">http://content.fri3d.be/cfp/<%= submission.id %>?wrong_email</a></center></span>
                     <br> <a href="http://www.fri3d.be/" style="text-decoration: underline; color: #0E98A8; font-size: 12px; text-align: center;">www.fri3d.be</a>.
                   </td>
                 </tr>

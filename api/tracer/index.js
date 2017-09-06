@@ -99,6 +99,11 @@ function diff2txt(d) {
 Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var self = this;
     var differences = diff(oldValue, newValue);
+    var lang = 'nl';
+    if ('form_language' in newValue) {
+        lang = newValue.form_language;
+        console.info("pushing lang to "+lang);
+    }
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
