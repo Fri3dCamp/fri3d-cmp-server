@@ -12,6 +12,12 @@ process.on('SIGINT', function() {
     LOGGER.info("shutting down due to sigint...");
     process.exit(0);
 });
+process.on('SIGTERM', function() {
+    console.log("shutdown...");
+    LOGGER.info("shutting down due to sigterm...");
+    process.exit(0);
+});
+
 
 /* -- Configuration -- */
 var configuration = require('./config');
