@@ -8,10 +8,18 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 
 var mails = {
-    submission: {
-        created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created')),
-        updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated'))
-    }
+    en: {
+        submission: {
+            created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created_en')),
+            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_en'))
+        },
+    },
+    nl: {
+        submission: {
+            created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created_nl')),
+            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_nl'))
+        },
+    },
 };
 
 function Tracer(storage, orgaEmail) {
@@ -30,6 +38,11 @@ function Tracer(storage, orgaEmail) {
 
 Tracer.prototype.traceCreation = function(newValue) {
     var self = this;
+    var lang = 'nl';
+    if ('form_language' in newValue) {
+        lang = newValue.form_language;
+        console.info("pushing lang to "+lang);
+    }
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
@@ -42,7 +55,7 @@ Tracer.prototype.traceCreation = function(newValue) {
 
     var defer = Q.defer();
 
-    mails.submission.created.render({"submission": newValue}, function(err, result) {
+    mails[lang].submission.created.render({"submission": newValue}, function(err, result) {
         if (err) return defer.reject();
 
         var mailOptions = {
