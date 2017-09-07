@@ -7,6 +7,8 @@ services:
             - ./frontend/data:/var/www:ro
             - ./frontend/cert/api.fri3d.be.crt.pem:/api.fri3d.be.crt.pem:ro
             - ./frontend/cert/api.fri3d.be.key.pem:/api.fri3d.be.key.pem:ro
+            - ./frontend/cert/content.fri3d.be.crt.pem:/content.fri3d.be.crt.pem:ro
+            - ./frontend/cert/content.fri3d.be.key.pem:/content.fri3d.be.key.pem:ro
         ports:
             - "8080:80"
             - "443:443"
@@ -28,10 +30,10 @@ services:
             memlock:
                 hard: -1
                 soft: -1
-        mem_limit: 1G
+        mem_limit: 4G
         environment:
             - cluster.name=docker-cluster
             - bootstrap.memory_lock=true
             - path.repo=/backups
-            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
         env_file: env

@@ -28,11 +28,13 @@ function Tracer(storage, orgaEmail) {
     this.transporter = nodemailer.createTransport({
         host: configuration.mail.host,
         port: configuration.mail.port,
-        secure: false, // secure:true for port 465, secure:false for port 587
+        secure: true, // secure:true for port 465, secure:false for port 587
         auth: {
             user: configuration.mail.user,
             pass: configuration.mail.pass,
-        }
+        },
+        logger : true,
+        debug : true,
     });
 }
 
