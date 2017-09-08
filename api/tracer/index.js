@@ -43,7 +43,6 @@ Tracer.prototype.traceCreation = function(newValue) {
     var lang = 'nl';
     if ('form_language' in newValue) {
         lang = newValue.form_language;
-        console.info("pushing lang to "+lang);
     }
 
     // -- add the email addresses
@@ -104,7 +103,6 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var lang = 'nl';
     if ('form_language' in newValue) {
         lang = newValue.form_language;
-        console.info("pushing lang to "+lang);
     }
 
     // -- add the email addresses
@@ -118,7 +116,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
     var defer = Q.defer();
 
-    mails.submission.updated.render({"submission": newValue, diff: differences}, function(err, result) {
+    mails[lang].submission.updated.render({"submission": newValue, diff: differences}, function(err, result) {
         if (err) return defer.reject();
 
         var mailOptions = {
@@ -159,6 +157,9 @@ function sendMail(transporter, mail) {
 
         defer.resolve(info);
     });
+
+    // XXX FIXME DIRTYHAXX TODO THING
+    defer.resolve('howareyougentlemen');
 
     return defer.promise;
 }
