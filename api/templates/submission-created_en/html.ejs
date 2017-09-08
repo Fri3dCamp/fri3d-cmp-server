@@ -24,6 +24,9 @@
             table[class=body] a {
         font-size: 16px !important;
       }
+      table[class=body] p.small {
+        font-size: 12px !important;
+      }
       table[class=body] .wrapper,
             table[class=body] .article {
         padding: 10px !important;
@@ -94,11 +97,11 @@
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Je inschrijving is goed aangekomen.</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Your proposal was successfully received.</span>
             <table class="main" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
                 <tr>
                     <td style="padding:10px;margin:0;background-color:#EDEDED;text-align:center">
-                        <img src="http://fri3d.be/img/transactional_mail_header.png" alt="Fri3d Camp 2018 | Van 18 tot 20 august" width="260" height="81">
+                        <img src="http://fri3d.be/img/transactional_mail_header.png" alt="Fri3d Camp 2018 | Van 18 tot 20 augustus" width="260" height="81">
                     </td>
                 </tr>
               <!-- START MAIN CONTENT AREA -->
@@ -107,31 +110,25 @@
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hello <%= submission.firstname %>,</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We've received your content submission!</p>
-                        <h3 style="font-family: sans-serif; font-size: 20px; font-weight:bold;">These is the submission we received</h3>
-                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;">Title</h4>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><%= submission.title %></p>
-                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;">Description</h4>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><%= submission.summary %></p>
-
-                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;margin-top:40px;">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
-                                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #0E98AF; border-radius: 5px; text-align: center;"> <a href="https://api.fri3d.be/submission/<%= submission.id %>" target="_blank" style="display: inline-block; color: #ffffff; background-color: #0E98AF; border: solid 1px #0E98AF; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #0E98AF;">Bewerk je inschrijving</a> </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Have any questions? <a style="color:#0E98A8" href="mailto:content@fri3d.be">Please contact us</a>.</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Best regards,<br>The Fri3d Camp content team.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for your proposal for Fri3d Camp 2018 !!! (*)</p>
+                        <h4 style="font-family: sans-serif; font-size: 14px; font-weight:bold;margin-bottom:3px;"><center><%= submission.title %></center></h4>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><center><%= submission.summary %></center></p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">You can always <b>update</b> it, add <b>comments</b> or ask us additional <b>questions</b>.</p>
+                            <p style="text-align:center;">
+                                <center>
+                                <a href="<%= url_update %>" target="_blank" style="display: inline-block; color: #ffffff; background-color: #0E98AF; border: solid 1px #0E98AF; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #0E98AF;">Update your proposal</a>
+                                </center>
+                            </p>
+                            <p class="small" style="text-align:center;font-family: sans-serif; color: #454545; font-size: 12px; font-weight: normal; margin: 0; Margin-bottom: 15px;">( <%= url_update %> )</p>
+                        <p style="text-color:#DD3333;">
+                            This link is <b>personal</b> and secret, never casually pass it along to others!
+                        </p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We'll examine your proposal and may ask you additional questions via this way to complete or further detail your proposal.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Best regards,</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Fri3d Camp, Team Content</p>
+                        <p>
+                            <span style="color: #454545; font-size: 12px;">(*) This proposal was entered with your email address, if you didn't submit this proposal yourself and you'd like us to ignore it, please <a href="<%= url_unsub %>" style="color:#333333;text-decoration:underline;">follow this link to mark it as invalid</a>. (<%= url_unsub %>)</span>
+                        </p>
                       </td>
                     </tr>
                   </table>
@@ -145,14 +142,12 @@
             <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
-                  <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Fri3d Camp is a biennial family-friendly summer camp for hackers, mackers and do-it-yourselfers. </span>
-                    <br> <a href="http://www.fri3d.be/" style="text-decoration: underline; color: #0E98A8; font-size: 12px; text-align: center;">www.fri3d.be</a>.
+                  <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;"><a href="http://www.fri3d.be/" style="text-decoration: underline; color: #0E98A8; font-size: 12px; text-align: center;">www.fri3d.be</a>.
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                      <a style="color:#0E98A8" href="http://www.twitter.com/fri3dcamp">Twitter</a> | <a style="color:#0E98A8" href="http://www.facebook.com/Fri3dCamp/">Facebook</a>
+                      <a style="color:#0E98A8" href="https://www.twitter.com/fri3dcamp">Twitter</a> | <a style="color:#0E98A8" href="https://www.facebook.com/Fri3dCamp/">Facebook</a>
                   </td>
                 </tr>
               </table>

@@ -116,10 +116,10 @@
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Je kan dit voorstel steeds <b>bijwerken</b>, aanvullen met <b>commentaar</b> of ons bijkomende <b>vragen stellen</b>.</p>
                             <p style="text-align:center;">
                                 <center>
-                                <a href="http://content.fri3d.be/cfp/<%= submission.id %>" target="_blank" style="display: inline-block; color: #ffffff; background-color: #0E98AF; border: solid 1px #0E98AF; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #0E98AF;">Bewerk je inschrijving</a>
+                                <a href="<%= url_update %>" target="_blank" style="display: inline-block; color: #ffffff; background-color: #0E98AF; border: solid 1px #0E98AF; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #0E98AF;">Bewerk je inschrijving</a>
                                 </center>
                             </p>
-							<p class="small" style="text-align:center;font-family: sans-serif; color: #454545; font-size: 12px; font-weight: normal; margin: 0; Margin-bottom: 15px;">( http://content.fri3d.be/cfp/<%= submission.id %> )</p>
+                            <p class="small" style="text-align:center;font-family: sans-serif; color: #454545; font-size: 12px; font-weight: normal; margin: 0; Margin-bottom: 15px;">( <%= url_update %> )</p>
                         <p style="text-color:#DD3333;">
                             Deze link is <b>persoonlijk</b> en geheim, geef hem nooit zomaar door aan anderen!
                         </p>
@@ -127,7 +127,7 @@
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Met vriendelijke groeten,</p>
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Fri3d Camp, Team Content</p>
                         <p>
-                            <span style="color: #454545; font-size: 12px;">(*) Als je niet zelf dit voorstel hebt ingediend en je wil dat we dit voorstel, ingezonden via jouw email adres, negeren, gelieve dan <a href="http://content.fri3d.be/cfp/<%= submission.id %>?wrong_email" style="color:#333333;text-decoration:underline;">deze link te volgen om dit voorstel als foutief te markeren</a>. (http://content.fri3d.be/cfp/<%= submission.id %>?wrong_email)</span>
+                            <span style="color: #454545; font-size: 12px;">(*) Als je niet zelf dit voorstel hebt ingediend en je wil dat we dit voorstel, ingezonden via jouw email adres, negeren, gelieve dan <a href="<%= url_unsub %>" style="color:#333333;text-decoration:underline;">deze link te volgen om dit voorstel als foutief te markeren</a>. (<%= url_unsub %>)</span>
                         </p>
                       </td>
                     </tr>
@@ -147,7 +147,7 @@
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                      <a style="color:#0E98A8" href="http://www.twitter.com/fri3dcamp">Twitter</a> | <a style="color:#0E98A8" href="http://www.facebook.com/Fri3dCamp/">Facebook</a>
+                      <a style="color:#0E98A8" href="https://www.twitter.com/fri3dcamp">Twitter</a> | <a style="color:#0E98A8" href="https://www.facebook.com/Fri3dCamp/">Facebook</a>
                   </td>
                 </tr>
               </table>
