@@ -4,6 +4,7 @@ module.exports = {
         port: parseInt(process.env.SMTP_PORT),
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
+        base_url : process.env.MAIL_BASE_URL,
     },
     port: process.env.PORT || 3100,
     elasticsearch: {

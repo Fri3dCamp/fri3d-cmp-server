@@ -38,12 +38,42 @@ function Tracer(storage, orgaEmail) {
     });
 }
 
+function submission_language(submission) {
+
+    if ('form_language' in submission && submission.form_language != 'nl') {
+        return submission.form_language;
+    }
+    return 'nl';
+
+}
+
+function build_url(submission, error=false) {
+
+    var url = configuration.mail.base_url + '/cfp';
+    var args = [];
+
+    url += '/' + submission.id;
+
+    if ('form_language' in submission && submission.form_language != 'nl') {
+        args.push('lang=' + submission.form_language);
+    }
+    if (error) {
+        args.push('wrong_email');
+    }
+
+    if (args.length > 0) {
+        url += '?' + args.join('&');
+    }
+
+    console.log('url built: '+url);
+    return url;
+
+}
+
+
 Tracer.prototype.traceCreation = function(newValue) {
     var self = this;
-    var lang = 'nl';
-    if ('form_language' in newValue) {
-        lang = newValue.form_language;
-    }
+    var lang = submission_language(newValue);
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
@@ -56,7 +86,11 @@ Tracer.prototype.traceCreation = function(newValue) {
 
     var defer = Q.defer();
 
-    mails[lang].submission.created.render({"submission": newValue}, function(err, result) {
+    mails[lang].submission.created.render({
+        "submission": newValue,
+        url_update : build_url(newValue),
+        url_unsub : build_url(newValue, true),
+    }, function(err, result) {
         if (err) return defer.reject();
 
         var mailOptions = {
@@ -100,10 +134,7 @@ function diff2txt(d) {
 Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var self = this;
     var differences = diff(oldValue, newValue);
-    var lang = 'nl';
-    if ('form_language' in newValue) {
-        lang = newValue.form_language;
-    }
+    var lang = submission_language(newValue);
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
@@ -116,7 +147,12 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
     var defer = Q.defer();
 
-    mails[lang].submission.updated.render({"submission": newValue, diff: differences}, function(err, result) {
+    mails[lang].submission.updated.render({
+        "submission": newValue,
+        diff: diff2txt(differences),
+        url_update : build_url(newValue),
+        url_unsub : build_url(newValue, true),
+    }, function(err, result) {
         if (err) return defer.reject();
 
         var mailOptions = {
