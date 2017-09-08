@@ -28,13 +28,13 @@ function Tracer(storage, orgaEmail) {
     this.transporter = nodemailer.createTransport({
         host: configuration.mail.host,
         port: configuration.mail.port,
-        secure: true, // secure:true for port 465, secure:false for port 587
+        secure: configuration.mail.secure, // secure:true for port 465, secure:false for port 587
         auth: {
             user: configuration.mail.user,
             pass: configuration.mail.pass,
         },
-        logger : true,
-        debug : true,
+        logger : configuration.mail.logger,
+        debug : configuration.mail.debug,
     });
 }
 
@@ -94,7 +94,7 @@ Tracer.prototype.traceCreation = function(newValue) {
         if (err) return defer.reject();
 
         var mailOptions = {
-            from: '"Fri3dcamp Content Platform" <content@fri3d.be>',
+            from: '"Fri3d Camp 2018" <content@fri3d.be>',
             to: to.join(','),
             subject: result.subject,
             text: result.text,
@@ -156,7 +156,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
         if (err) return defer.reject();
 
         var mailOptions = {
-            from: '"Fri3dcamp Content Platform" <content@fri3d.be>',
+            from: '"Fri3d Camp 2018" <content@fri3d.be>',
             to: to.join(','),
             subject: result.subject,
             text: result.text,
