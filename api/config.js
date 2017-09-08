@@ -7,6 +7,7 @@ module.exports = {
         secure : process.env.SMTP_SECURE === "true",
         logger : process.env.SMTP_LOGGER === "true",
         debug : process.env.SMTP_DEBUG === "true",
+        from : process.env.SMTP_FROM,
         base_url : process.env.MAIL_BASE_URL,
     },
     port: process.env.PORT || 3100,

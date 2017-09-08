@@ -94,7 +94,7 @@ Tracer.prototype.traceCreation = function(newValue) {
         if (err) return defer.reject();
 
         var mailOptions = {
-            from: '"Fri3d Camp 2018" <content@fri3d.be>',
+            from: configuration.mail.from,
             to: to.join(','),
             subject: result.subject,
             text: result.text,
@@ -156,7 +156,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
         if (err) return defer.reject();
 
         var mailOptions = {
-            from: '"Fri3d Camp 2018" <content@fri3d.be>',
+            from: configuration.mail.from,
             to: to.join(','),
             subject: result.subject,
             text: result.text,

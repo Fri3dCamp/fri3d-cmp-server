@@ -1,3 +1,12 @@
 HERRING="RED"
 ES_INDEX=fri3d-cmp
 ES_HOST=store
+SMTP_HOST=ask
+SMTP_PORT=1337
+SMTP_USER=development
+SMTP_PASS=team
+SMTP_SECURE=true
+SMTP_LOGGER=true
+SMTP_DEBUG=false
+SMTP_FROM='"Fri3d Camp 2018 - Team Content" <content@fri3d.be>'
+MAIL_BASE_URL=http://localhost:8080
