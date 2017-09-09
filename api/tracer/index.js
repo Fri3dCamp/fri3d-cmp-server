@@ -151,7 +151,9 @@ function textdiff(o, n, lang) {
     if (Object.keys(added).length > 0) {
         out += '<ul><h4>' + tr('added') + '</h4>\n';
         for (var k in added) {
-            out += '  <li><b>' + tr(k) + '</b>: <i>' + pprint(added[k]) + '</i></li>\n';
+            if (added[k].length)
+                // inhibit sending empty fields
+                out += '  <li><b>' + tr(k) + '</b>: <i>' + pprint(added[k]) + '</i></li>\n';
         }
         out += '</ul><!-- '+tr('added') + '-->\n';
     }
@@ -173,6 +175,7 @@ function textdiff(o, n, lang) {
     return out;
 
 }
+
 Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var self = this;
     var lang = submission_language(newValue);

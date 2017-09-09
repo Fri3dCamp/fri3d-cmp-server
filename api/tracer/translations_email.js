@@ -18,7 +18,7 @@ var xlat = {
             LEVEL_FAMILY : 'Families',
             LEVEL_CHILD : 'Kinderen',
             LEVEL_ADULT : 'Volwassenen',
-        audience_requirments : 'Vereisten van publiek',
+        audience_requirements : 'Vereisten voor participanten',
         collaborators : 'Medewerkers',
         costs : 'Kosten',
         day_1_available : 'Beschikbaar dag 1',
@@ -35,7 +35,7 @@ var xlat = {
         general_remarks : 'Opmerkingen',
         lead_contact_email : 'Contactemail',
         multiple_sessions : 'Meerdere sessies nodig',
-        open_for_all : 'Specifiek doelpubliek indachtig', // da gaat ge veranderen eh?
+        open_for_all : 'Voor iedereen toegangkelijk',
         open_for_repititions : 'Bereid tot herhaling',
         requires_pay : 'Verbonden kosten',
         session_count: 'Aantal sessies',
