@@ -3,6 +3,7 @@ const uuid = require('node-uuid');
 const diff = require('deep-diff').diff;
 const Q = require('q');
 var configuration = require('../config');
+var xlat = require('./translations_email');
 
 var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
@@ -88,6 +89,7 @@ Tracer.prototype.traceCreation = function(newValue) {
 
     mails[lang].submission.created.render({
         "submission": newValue,
+        diff : textdiff({}, newValue, lang),
         url_update : build_url(newValue),
         url_unsub : build_url(newValue, true),
     }, function(err, result) {
@@ -110,31 +112,71 @@ Tracer.prototype.traceCreation = function(newValue) {
     return defer.promise;
 };
 
-function diff2txt(d) {
+function textdiff(o, n, lang) {
+    const sep_list = ', ';
+    const sep_obj = '/';
 
-    var o = [];
-
-    for (var i in d) {
-        var e = d[i];
-        var name = e.path.join('.');
-        if (e.kind == 'N') {
-            o.push('"'+name+'" is nieuw ("'+e.rhs+'")');
-        } else if (e.kind == 'D') {
-            o.push('"'+name+'" is weg');
-        } else if (e.kind == 'E') {
-            o.push('"'+name+'" is aangepast (van "'+e.lhs+'" naar "'+e.rhs+'")');
-        } else {
-            o.push('"'+name+'" is aangepast');
+    function tr(x) { return (x in xlat[lang]) ? xlat[lang][x] : x; };
+    function pprint(x) {
+        if (x instanceof Array) {
+            return x.map(pprint).join(sep_list);
+        } else if (x instanceof Object) {
+            return function(obj) {
+                var o = [];
+                for (var k in obj) {
+                    o.push(pprint(obj[k]));
+                }
+                return o;
+            }(x).join(sep_obj);
         }
+        return tr(x);
     }
-    return o.join(", ");
+
+    var removed = {};
+    var added = {}
+    var changed = [];
+
+    var out = "";
+
+    for (var k in o)
+        if (!(k in n))
+            removed[k] = o[k];
+
+    for (var k in n)
+        if (!(k in o))
+            added[k] = n[k];
+        else if (JSON.stringify(o[k]) != JSON.stringify(n[k]))
+            changed.push(k);
+
+    if (Object.keys(added).length > 0) {
+        out += '<ul><h4>' + tr('added') + '</h4>\n';
+        for (var k in added) {
+            out += '  <li><b>' + tr(k) + '</b>: <i>' + pprint(added[k]) + '</i></li>\n';
+        }
+        out += '</ul><!-- '+tr('added') + '-->\n';
+    }
+    if (Object.keys(removed).length > 0) {
+        out += '<ul><h4>' + tr('removed') + '</h4>\n';
+        for (var k in removed) {
+            out += '  <li><b>' + t(rk) + '</b></li>\n'; //: ' + pprint(removed[k]) + '</li>\n';
+        }
+        out += '</ul><!-- '+tr('removed') + '-->\n';
+    }
+    if (changed.length > 0) {
+        out += '<ul><h4>' + tr('changed') + '</h4>\n';
+        changed.forEach(function(k) {
+            out += '  <li><b>' + tr(k) + '</b> ' + tr('changed_from') + ' "<i>' + pprint(o[k]) + '</i>" ' + tr('changed_to') + ' "<i>' + pprint(n[k]) + '</i>".</li>\n';
+        });
+        out += '</ul><!-- '+tr('changed') + '-->\n';
+    }
+
+    return out;
 
 }
-
 Tracer.prototype.traceAlteration = function(oldValue, newValue) {
     var self = this;
-    var differences = diff(oldValue, newValue);
     var lang = submission_language(newValue);
+    var differences = textdiff(oldValue, newValue, lang);
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
@@ -149,7 +191,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
     mails[lang].submission.updated.render({
         "submission": newValue,
-        diff: diff2txt(differences),
+        diff: differences,
         url_update : build_url(newValue),
         url_unsub : build_url(newValue, true),
     }, function(err, result) {
@@ -165,7 +207,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, "Submission updated: "+diff2txt(differences))
+            sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue })
         ]));
     });
 
