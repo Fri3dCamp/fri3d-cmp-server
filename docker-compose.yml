@@ -10,7 +10,7 @@ services:
             - ./frontend/cert/content.fri3d.be.crt.pem:/content.fri3d.be.crt.pem:ro
             - ./frontend/cert/content.fri3d.be.key.pem:/content.fri3d.be.key.pem:ro
         ports:
-            - "8080:80"
+            - "80:80"
             - "443:443"
         links:
             - api:api
