@@ -89,7 +89,7 @@ Tracer.prototype.traceCreation = function(newValue) {
 
     mails[lang].submission.created.render({
         "submission": newValue,
-        diff : textdiff({}, newValue, lang),
+        diff : textdiff({ id : newValue.id }, newValue, lang),
         url_update : build_url(newValue),
         url_unsub : build_url(newValue, true),
     }, function(err, result) {
