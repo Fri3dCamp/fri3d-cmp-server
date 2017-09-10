@@ -50,23 +50,20 @@ function submission_language(submission) {
 
 function build_url(submission, error=false) {
 
-    var url = configuration.mail.base_url + '/cfp';
+    var url = configuration.mail.base_url;
     var args = [];
 
+    url += (error) ? '/cfp_wrong_email' : '/cfp';
     url += '/' + submission.id;
 
     if ('form_language' in submission && submission.form_language != 'nl') {
         args.push('lang=' + submission.form_language);
-    }
-    if (error) {
-        args.push('wrong_email');
     }
 
     if (args.length > 0) {
         url += '?' + args.join('&');
     }
 
-    console.log('url built: '+url);
     return url;
 
 }
@@ -105,7 +102,7 @@ Tracer.prototype.traceCreation = function(newValue) {
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, "Submission created")
+            sendComment(self.comments, newValue.id, { prev: {}, cur : newValue, diff : textdiff({}, newValue, lang) })
         ]));
     });
 
@@ -210,7 +207,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue })
+            sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue, diff : differences })
         ]));
     });
 
