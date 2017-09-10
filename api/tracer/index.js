@@ -75,10 +75,14 @@ Tracer.prototype.traceCreation = function(newValue) {
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
-    if (newValue.speaker_email) to.push(newValue.speaker_email);
+    if (newValue.speaker_email)
+        if (!newValue.speaker_email.endsWith(configuration.mail.ignored_suffix))
+            to.push(newValue.speaker_email);
     if (newValue.collaborators && Array.isArray(newValue.collaborators)) {
         newValue.collaborators.forEach(function(collaborator) {
-            if (collaborator.email) to.push(collaborator.email);
+            if (collaborator.email)
+                if (!collaborator.email.endsWith(configuration.mail.ignored_suffix))
+                     to.push(collaborator.email);
         });
     }
 
@@ -180,10 +184,14 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
 
     // -- add the email addresses
     var to = [ this.orgaEmail ];
-    if (newValue.speaker_email) to.push(newValue.speaker_email);
+    if (newValue.speaker_email)
+        if (!newValue.speaker_email.endsWith(configuration.mail.ignored_suffix))
+            to.push(newValue.speaker_email);
     if (newValue.collaborators && Array.isArray(newValue.collaborators)) {
         newValue.collaborators.forEach(function(collaborator) {
-            if (collaborator.email) to.push(collaborator.email);
+            if (collaborator.email)
+                if (!collaborator.email.endsWith(configuration.mail.ignored_suffix))
+                    to.push(collaborator.email);
         });
     }
 

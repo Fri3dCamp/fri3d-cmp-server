@@ -9,6 +9,7 @@ module.exports = {
         debug : process.env.SMTP_DEBUG === "true",
         from : process.env.SMTP_FROM,
         base_url : process.env.MAIL_BASE_URL,
+        ignored_suffix : '.MARKED_AS_WRONG',
     },
     port: process.env.PORT || 3100,
     elasticsearch: {
