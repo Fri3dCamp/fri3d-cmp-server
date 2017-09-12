@@ -7,7 +7,7 @@ function SubmissionService(storage) {
     this.submissions = storage.entity('submissions');
     this.comments = storage.entity('comments');
 
-    this.tracer = new Tracer(storage, "daan.gerits@gmail.com");
+    this.tracer = new Tracer(storage, "content@fri3d.be");
 }
 
 SubmissionService.prototype.getSubmission = function(submissionId) {
