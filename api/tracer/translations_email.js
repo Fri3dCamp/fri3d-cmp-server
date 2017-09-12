@@ -44,7 +44,7 @@ var xlat = {
         speaker_email : 'Email',
         speaker_name : 'Naam',
         status : 'Huidige status',
-            PROPOSED : 'Ingedient',
+            PROPOSED : 'Ingediend',
         summary : 'Beschrijving',
         title : 'Titel',
 
