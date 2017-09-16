@@ -268,9 +268,10 @@ function sendSlackNotif(slack, text) {
         text : text,
         icon_emoji : ":tent:",
     }, function(e, resp) {
-        if (resp.response != "ok") {
-            console.log("error submitting notification to slack:");
-            console.dir(resp);
+        if (e) {
+            console.log("error submitting to slack: "+e);
+        } else if (resp && 'response' in resp) {
+            console.log("submitted notification to slack: "+resp.response);
         }
         d.resolve("ok");
     });
