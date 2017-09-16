@@ -4,6 +4,7 @@ const diff = require('deep-diff').diff;
 const Q = require('q');
 var configuration = require('../config');
 var xlat = require('./translations_email');
+var Slack = require('slack-node');
 
 var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
@@ -37,6 +38,8 @@ function Tracer(storage, orgaEmail) {
         logger : configuration.mail.logger,
         debug : configuration.mail.debug,
     });
+    this.slack = new Slack();
+    this.slack.setWebhook(configuration.slack.url);
 }
 
 function submission_language(submission) {
@@ -104,9 +107,12 @@ Tracer.prototype.traceCreation = function(newValue) {
             html: result.html
         };
 
+        var slackText = "New submission from " + newValue.speaker_email + " titled \"" + newValue.title + "\", see " + build_url(newValue);
+
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, { prev: {}, cur : newValue, diff : textdiff({}, newValue, lang) })
+            sendComment(self.comments, newValue.id, { prev: {}, cur : newValue, diff : textdiff({}, newValue, lang) }),
+            sendSlackNotif(self.slack, slackText)
         ]));
     });
 
@@ -212,10 +218,12 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
             text: result.text,
             html: result.html
         };
+        var slackText = "Updated submission from " + newValue.speaker_email + " titled \"" + newValue.title + "\", see " + build_url(newValue);
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
-            sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue, diff : differences })
+            sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue, diff : differences }),
+            sendSlackNotif(self.slack, slackText)
         ]));
     });
 
@@ -248,4 +256,25 @@ function sendMail(transporter, mail) {
     defer.resolve('howareyougentlemen');
 
     return defer.promise;
+}
+
+function sendSlackNotif(slack, text) {
+
+    var d = Q.defer();
+
+    slack.webhook({
+        channel : configuration.slack.channel,
+        username : configuration.slack.username,
+        text : text,
+        icon_emoji : ":tent:",
+    }, function(e, resp) {
+        if (resp.response != "ok") {
+            console.log("error submitting notification to slack:");
+            console.dir(resp);
+        }
+        d.resolve("ok");
+    });
+
+    return d.promise;
+
 }

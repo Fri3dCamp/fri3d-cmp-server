@@ -19,6 +19,11 @@ module.exports = {
         }],
         index: process.env.ES_INDEX || "my-app",
         log: process.env.ES_LOG || "info"
+    },
+    slack: {
+        url : process.env.SLACK_URL || "nope",
+        channel : process.env.SLACK_CHANNEL || "nope",
+        username : process.env.SLACK_USERNAME || "nope",
     }
 };
 // vim: set expandtab:

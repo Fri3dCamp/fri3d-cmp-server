@@ -39,7 +39,8 @@
     "bodybuilder": "^2.2.0",
     "deep-diff": "^0.3.8",
     "email-templates": "^2.7.1",
-    "ejs": "^2.5.7"
+    "ejs": "^2.5.7",
+    "slack-node": "^0.1.8"
   },
   "devDependencies": {
     "mocha": "~1.17.0",

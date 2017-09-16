@@ -10,3 +10,6 @@ SMTP_LOGGER=true
 SMTP_DEBUG=false
 SMTP_FROM='"Fri3d Camp 2018 - Team Content" <content@fri3d.be>'
 MAIL_BASE_URL=http://localhost:8080
+SLACK_URL=no
+SLACK_CHANNEL=no
+SLACK_USERNAME=no
