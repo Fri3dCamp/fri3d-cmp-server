@@ -107,7 +107,7 @@ Tracer.prototype.traceCreation = function(newValue) {
             html: result.html
         };
 
-        var slackText = "New submission from " + newValue.speaker_email + " titled \"" + newValue.title + "\", see " + build_url(newValue);
+        var slackText = "New entry \"" + newValue.title + "\" (by " + newValue.speaker_name + "), <" + build_url(newValue + "|linky>".);
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
@@ -218,7 +218,7 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
             text: result.text,
             html: result.html
         };
-        var slackText = "Updated submission from " + newValue.speaker_email + " titled \"" + newValue.title + "\", see " + build_url(newValue);
+        var slackText = "Updated entry \"" + newValue.title + "\" (by " + newValue.speaker_name + "), <" + build_url(newValue + "|linky>".);
 
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
