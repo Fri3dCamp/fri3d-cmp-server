@@ -11,14 +11,15 @@ CommentsService.prototype.listComments = function(submissionId) {
     return this.submissions.id(submissionId);
 };
 
-CommentsService.prototype.createComment = function(data, submissionId, origin) {
-    LOGGER.info("createComment()");
-    console.dir(data);
+CommentsService.prototype.createComment = function(data, submissionId) {
     if (!data.id) data.id = uuid.v4();
     data.submission_id = submissionId;
-    data.origin = origin;
+	// FIXME check origin
+    //data.origin = origin;
     data.timestamp = new Date();
 
+	console.log("storing: ");
+	console.dir(data);
     return this.comments.set(data.id, data).then(function(response) {
 
     });

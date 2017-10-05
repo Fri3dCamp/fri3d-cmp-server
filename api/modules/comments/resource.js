@@ -8,7 +8,7 @@ CommentsResource.prototype.list = function(req, res) {
 };
 
 CommentsResource.prototype.create = function(req, res) {
-    return this.responseHandler.handle(req, res, this.service.createComment(req.body, req.query['submission_id']), 'user');
+    return this.responseHandler.handle(req, res, this.service.createComment(req.body, req.query['submission_id']));
 };
 
 CommentsResource.prototype.update = function(req, res) {
