@@ -1,3 +1,6 @@
 [submodule "frontend/data"]
 	path = frontend/data
 	url = git@github.com:Fri3dCamp/fri3d-cmp-web.git
+[submodule "frontend/content.fri3d.be"]
+	path = frontend/content.fri3d.be
+	url = git@github.com:Fri3dCamp/content.fri3d.be.git

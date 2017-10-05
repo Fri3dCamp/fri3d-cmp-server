@@ -4,7 +4,7 @@ services:
         image: "nginx:latest"
         volumes:
             - ./frontend/config/default.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./frontend/data:/var/www:ro
+            - ./frontend/content.fri3d.be/fri3d:/var/www:ro
             - ./frontend/cert/api.fri3d.be.crt.pem:/api.fri3d.be.crt.pem:ro
             - ./frontend/cert/api.fri3d.be.key.pem:/api.fri3d.be.key.pem:ro
             - ./frontend/cert/content.fri3d.be.crt.pem:/content.fri3d.be.crt.pem:ro
