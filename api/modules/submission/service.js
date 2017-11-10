@@ -2,6 +2,8 @@ const uuid = require('node-uuid');
 var Tracer = require('../../tracer');
 var log4js = require('log4js');
 var LOGGER = log4js.getLogger("server");
+var Errors = require('../../errors');
+var Q = require('q');
 
 function SubmissionService(storage) {
     this.submissions = storage.entity('submissions');
@@ -9,6 +11,13 @@ function SubmissionService(storage) {
 
     this.tracer = new Tracer(storage, "content@fri3d.be");
 }
+
+SubmissionService.prototype.listSubmissions = function(query, offset, size) {
+    return this.submissions.search(query, null, {
+        offset: offset || 0,
+        size: size || 25
+    });
+};
 
 SubmissionService.prototype.getSubmission = function(submissionId) {
     return this.submissions.id(submissionId);
@@ -36,6 +45,10 @@ SubmissionService.prototype.setSubmission = function(data) {
     }
 };
 
+SubmissionService.prototype.removeSubmission = function(user, submissionId) {
+    return this.submissions.remove(submissionId);
+};
+
 SubmissionService.prototype.listComments = function(submissionId, offset, from_ts) {
     var builder = this.comments.prepareSearch()
         .filter('term', 'submission_id.keyword', submissionId)
@@ -46,6 +59,30 @@ SubmissionService.prototype.listComments = function(submissionId, offset, from_t
         builder.from(offset);
 
     return this.comments.search(builder, null, { offset: offset || 0 });
+};
+
+SubmissionService.prototype.createComment = function(user, submissionId, data) {
+    if (user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
+        return Q.reject(new Errors.AuthorizationError("Only admins are allowed to post as fri3d"));
+
+    if (!data.id) data.id = uuid.v4();
+    data.submission_id = submissionId;
+    // FIXME check origin
+    //data.origin = origin;
+    data.timestamp = new Date();
+
+    LOGGER.info("storing: ", data);
+    return this.comments.set(data.id, data);
+};
+
+SubmissionService.prototype.updateComment = function(user, data) {
+    if (!data.id) data.id = uuid.v4();
+
+    return this.comments.set(data.id, data);
+};
+
+SubmissionService.prototype.removeComment = function(user, commentId) {
+    return this.comments.remove(commentId);
 };
 
 module.exports = SubmissionService;

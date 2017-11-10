@@ -39,18 +39,27 @@ function API(config) {
 
     this.app = express();
 
+    this.secret = jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: "https://fri3d.eu.auth0.com/.well-known/jwks.json"
+    });
+
+    this.softJwtCheck = jwt({
+        secret: this.secret,
+        audience: config.auth0.audience,
+        issuer: "https://fri3d.eu.auth0.com/",
+        algorithms: ['RS256'],
+        credentialsRequired: false
+    });
+
     this.jwtCheck = jwt({
-        secret: jwks.expressJwtSecret({
-            cache: true,
-            rateLimit: true,
-            jwksRequestsPerMinute: 5,
-            jwksUri: "https://fri3d.eu.auth0.com/.well-known/jwks.json"
-        }),
-        audience: 'content.fri3d.be',
+        secret: this.secret,
+        audience: config.auth0.audience,
         issuer: "https://fri3d.eu.auth0.com/",
         algorithms: ['RS256']
     });
-
 }
 
 API.prototype.module = function(name) {
@@ -142,7 +151,7 @@ API.prototype.listen = function() {
 // ====================================================================================================================
 
 API.prototype.registerHead = function(path, fn) {
-    this.app.head(path, fn);
+    this.app.head(path, this.softJwtCheck, fn);
     LOGGER.info('    [HEAD] ' + path);
 };
 
@@ -152,7 +161,7 @@ API.prototype.registerSecureHead = function(path, scopes, fn) {
 };
 
 API.prototype.registerGet = function(path, fn) {
-    this.app.get(path, fn);
+    this.app.get(path, this.softJwtCheck, fn);
     LOGGER.info('     [GET] ' + path);
 };
 
@@ -162,7 +171,7 @@ API.prototype.registerSecureGet = function(path, scopes, fn) {
 };
 
 API.prototype.registerPut = function(path, fn) {
-    this.app.put(path, function(req, res) { return fn(req, res); });
+    this.app.put(path, this.softJwtCheck, function(req, res) { return fn(req, res); });
     LOGGER.info('     [PUT] ' + path);
 };
 
@@ -172,7 +181,7 @@ API.prototype.registerSecurePut = function(path, scopes, fn) {
 };
 
 API.prototype.registerPost = function(path, fn) {
-    this.app.post(path, function(req, res) { return fn(req, res); });
+    this.app.post(path, this.softJwtCheck, function(req, res) { return fn(req, res); });
     LOGGER.info('    [POST] ' + path);
 };
 
@@ -182,7 +191,7 @@ API.prototype.registerSecurePost = function(path, scopes, fn) {
 };
 
 API.prototype.registerPatch = function(path, fn) {
-    this.app.patch(path, function(req, res) { return fn(req, res); });
+    this.app.patch(path, this.softJwtCheck, function(req, res) { return fn(req, res); });
     LOGGER.info('   [PATCH] ' + path);
 };
 
@@ -192,7 +201,7 @@ API.prototype.registerSecurePatch = function(path, scopes, fn) {
 };
 
 API.prototype.registerDelete = function(path, fn) {
-    this.app.delete(path, function(req, res) { return fn(req, res); });
+    this.app.delete(path, this.softJwtCheck, function(req, res) { return fn(req, res); });
     LOGGER.info('  [DELETE] ' + path);
 };
 

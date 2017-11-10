@@ -7,8 +7,10 @@ function CommentsService(storage) {
     this.submissions = storage.entity('submissions');
 }
 
-CommentsService.prototype.listComments = function(submissionId) {
-    return this.submissions.id(submissionId);
+CommentsService.prototype.listComments = function(submissionId, offset, size) {
+
+
+    return this.comments.search(submissionId);
 };
 
 CommentsService.prototype.createComment = function(data, submissionId) {

@@ -16,7 +16,7 @@ module.exports.resources = function(config, store, services, responseHandler) {
 module.exports.run = function(config, api, resources)  {
     var resource = resources.comments;
 
-    api.registerGet('/v1/comments', function(req, res) { return resource.list(req, res) });
+    api.registerGet('/v1/submissions/:submission_id/comments', function(req, res) { return resource.list(req, res) });
     api.registerPost('/v1/comments', function(req, res) { return resource.create(req, res); });
     api.registerPut('/v1/comments/:comment_id', function(req, res) { return resource.update(req, res); });
     api.registerDelete('/v1/comments/:comment_id', function(req, res) { return resource.remove(req, res); });

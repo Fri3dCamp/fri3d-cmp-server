@@ -1,4 +1,7 @@
 module.exports = {
+    auth0: {
+        audience: process.env.AUDIENCE || "https://staging.api.fri3d.be/v1",
+    },
     mail: {
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT),

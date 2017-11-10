@@ -39,7 +39,7 @@ api.storage(storage);
 
 /* -- Modules -- */
 api.module('health');
-api.module('comments');
+// api.module('comments');
 api.module('submission');
 
 // -- start listening for requests

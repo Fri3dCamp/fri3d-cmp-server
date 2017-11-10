@@ -25,6 +25,8 @@ ResponseHandler.prototype.handle = function(req, res, promise) {
                 res.status(400).send(msg);
             } else if (error.name == 'IllegalParameterError') {
                 res.status(400).send(msg);
+            } else if (error.name == 'AuthorizationError') {
+                res.status(403).send(msg);
             } else if (error.name == 'BadPayloadError') {
                 res.status(400).send(msg);
             } else if (error.name == 'MissingParameterError') {

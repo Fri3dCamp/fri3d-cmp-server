@@ -15,6 +15,14 @@ function NotFoundError(message) {
 NotFoundError.prototype = Object.create(Error.prototype);
 module.exports.NotFoundError = NotFoundError;
 
+function AuthorizationError(message) {
+    this.name = "AuthorizationError";
+    this.message = message;
+    this.stack = Error().stack;
+}
+AuthorizationError.prototype = Object.create(Error.prototype);
+module.exports.AuthorizationError = AuthorizationError;
+
 function MissingParameterError(message) {
     this.name = "MissingParameterError";
     this.message = message;

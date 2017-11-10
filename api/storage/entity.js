@@ -60,7 +60,7 @@ Entity.prototype.search = function(query, fields, paging) {
         index: this.index,
         type: this.type,
         _source: fields || '*',
-        body: query.build ? query.build() : query
+        body: query && query.build ? query.build() : query
     };
 
     if (paging) {

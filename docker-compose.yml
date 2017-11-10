@@ -37,3 +37,6 @@ services:
             - path.repo=/backups
             - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
         env_file: env
+        ports:
+          - "9200:9200"
+          - "9300:9300"

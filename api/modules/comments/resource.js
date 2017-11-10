@@ -4,7 +4,7 @@ function CommentsResource(service, responseHandler) {
 }
 
 CommentsResource.prototype.list = function(req, res) {
-    return this.responseHandler.handle(req, res, this.service.listComments(req.query['submission_id']));
+    return this.responseHandler.handle(req, res, this.service.listComments(req.params['submission_id']));
 };
 
 CommentsResource.prototype.create = function(req, res) {
