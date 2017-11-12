@@ -13,3 +13,4 @@ MAIL_BASE_URL=http://localhost:8080
 SLACK_URL=no
 SLACK_CHANNEL=no
 SLACK_USERNAME=no
+AUDIENCE="staging.content.fri3d.be"
