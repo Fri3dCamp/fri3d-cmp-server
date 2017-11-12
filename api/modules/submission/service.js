@@ -62,13 +62,13 @@ SubmissionService.prototype.listComments = function(submissionId, offset, from_t
 };
 
 SubmissionService.prototype.createComment = function(user, submissionId, data) {
-    if (user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
-        return Q.reject(new Errors.AuthorizationError("Only admins are allowed to post as fri3d"));
+    if (data && data.origin) {
+        if (user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
+            return Q.reject(new Errors.AuthorizationError("Only admins are allowed to post as fri3d"));
+    }
 
     if (!data.id) data.id = uuid.v4();
     data.submission_id = submissionId;
-    // FIXME check origin
-    //data.origin = origin;
     data.timestamp = new Date();
 
     LOGGER.info("storing: ", data);
