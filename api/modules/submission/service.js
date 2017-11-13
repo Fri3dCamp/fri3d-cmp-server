@@ -62,8 +62,8 @@ SubmissionService.prototype.listComments = function(submissionId, offset, from_t
 };
 
 SubmissionService.prototype.createComment = function(user, submissionId, data) {
-    if (data && data.origin) {
-        if (user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
+    if (data && data.origin !== 'author') {
+        if (!user || !user['http://fri3d.be/claims/roles'] || user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
             return Q.reject(new Errors.AuthorizationError("Only admins are allowed to post as fri3d"));
     }
 
