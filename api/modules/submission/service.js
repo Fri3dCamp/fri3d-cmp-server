@@ -62,6 +62,8 @@ SubmissionService.prototype.listComments = function(submissionId, offset, from_t
 };
 
 SubmissionService.prototype.createComment = function(user, submissionId, data) {
+    var self = this;
+
     if (data && data.origin !== 'author') {
         if (!user || !user['http://fri3d.be/claims/roles'] || user['http://fri3d.be/claims/roles'].indexOf('admin') === -1)
             return Q.reject(new Errors.AuthorizationError("Only admins are allowed to post as fri3d"));
@@ -72,7 +74,14 @@ SubmissionService.prototype.createComment = function(user, submissionId, data) {
     data.timestamp = new Date();
 
     LOGGER.info("storing: ", data);
-    return this.comments.set(data.id, data);
+
+    return this.getSubmission(submissionId).then(function(submission) {
+        return self.comments.set(data.id, data).then(function(response) {
+            return self.tracer.traceComment(data, submission, data.origin === "fri3d").then(function() {
+                return response;
+            });
+        });
+    });
 };
 
 SubmissionService.prototype.updateComment = function(user, data) {

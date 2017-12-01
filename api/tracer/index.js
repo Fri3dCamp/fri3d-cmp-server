@@ -13,13 +13,15 @@ var mails = {
     en: {
         submission: {
             created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created_en')),
-            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_en'))
+            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_en')),
+            commented: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-comment_en'))
         },
     },
     nl: {
         submission: {
             created: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-created_nl')),
-            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_nl'))
+            updated: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-updated_nl')),
+            commented: new EmailTemplate(path.join(process.cwd(), 'templates', 'submission-comment_nl'))
         },
     },
 };
@@ -223,6 +225,52 @@ Tracer.prototype.traceAlteration = function(oldValue, newValue) {
         defer.resolve(Q.allSettled([
             sendMail(self.transporter, mailOptions),
             sendComment(self.comments, newValue.id, { prev: oldValue, cur : newValue, diff : differences }),
+            sendSlackNotif(self.slack, slackText)
+        ]));
+    });
+
+    return defer.promise;
+};
+
+Tracer.prototype.traceComment = function(submission, message, fromAdmin) {
+    var self = this;
+    var lang = submission_language(submission);
+
+    // -- add the email addresses
+    var to = [ this.orgaEmail ];
+    if (submission.speaker_email)
+        if (!submission.speaker_email.endsWith(configuration.mail.ignored_suffix))
+            to.push(submission.speaker_email);
+    if (submission.collaborators && Array.isArray(submission.collaborators)) {
+        submission.collaborators.forEach(function(collaborator) {
+            if (collaborator.email)
+                if (!collaborator.email.endsWith(configuration.mail.ignored_suffix))
+                    to.push(collaborator.email);
+        });
+    }
+
+    var defer = Q.defer();
+
+    mails[lang].submission.commented.render({
+        "submission": submission,
+        message: message,
+        url_update : build_url(submission),
+        url_unsub : build_url(submission, true),
+    }, function(err, result) {
+        if (err) return defer.reject();
+
+        var mailOptions = {
+            from: configuration.mail.from,
+            to: to.join(','),
+            subject: result.subject,
+            text: result.text,
+            html: result.html
+        };
+
+        var slackText = "New comment added to entry \"" + submission.title + "\" (by " + (fromAdmin ? "a fri3d admin" : "someone with the url")+ "), <" + build_url(submission) + "|linky>.";
+
+        defer.resolve(Q.allSettled([
+            sendMail(self.transporter, mailOptions),
             sendSlackNotif(self.slack, slackText)
         ]));
     });
