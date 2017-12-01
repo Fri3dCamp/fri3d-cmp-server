@@ -77,7 +77,7 @@ SubmissionService.prototype.createComment = function(user, submissionId, data) {
 
     return this.getSubmission(submissionId).then(function(submission) {
         return self.comments.set(data.id, data).then(function(response) {
-            return self.tracer.traceComment(data, submission, data.origin === "fri3d").then(function() {
+            return self.tracer.traceComment(submission, data.contents.message, data.origin === "fri3d").then(function() {
                 return response;
             });
         });
