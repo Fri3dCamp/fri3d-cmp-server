@@ -31,6 +31,8 @@ services:
                 hard: -1
                 soft: -1
         mem_limit: 4G
+        ports:
+            - "9200:9200"
         environment:
             - cluster.name=docker-cluster
             - bootstrap.memory_lock=true
